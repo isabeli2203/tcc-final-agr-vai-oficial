@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Adicionar Livro</title>
+
+	<link rel="stylesheet" href="/css/style.css">
+
+</head>
+
+<body>
+	
+	<header>
+			<nav class="navbar">
+				<div class="logo">Universo Literário</div>
+			</nav>
+
+
+	</header>
+	<!--header acabou-->
+
+	<section class="main">
+
+		<div class="sidebar">
+			
+			<div class="logo_details">
+				
+				<i class="bx bx-menu" id="btn"></i>
+			</div>
+			<ul class="nav-list">
+				
+				<li>
+					<a href="/universoliterario/funcionario/AdicionarLivroADM">
+						<i class='bx bx-book-add'></i>
+						<span class="link_name">Adicionar Livro</span>
+					</a>
+					<span class="tooltip">Adicionar Livro</span>
+				</li>
+
+				<li>
+					<a href="/universoliterario/funcionario/EstoqueADM">
+						<i class='bx bx-box' ></i>
+						<span class="link_name">Estoque</span>
+					</a>
+					<span class="tooltip">Estoque</span>
+				</li>
+
+				<li>
+					<a href="/universoliterario/funcionario/listaFun">
+						<i class='bx bxs-user-circle' ></i>
+						<span class="link_name">Funcionários</span>
+					</a>
+					<span class="tooltip">Funcionários</span>
+				</li>
+
+				<li>
+					<a href="/universoliterario/funcionario/login">
+					  <i class="bx bx-log-out" id="log_out"></i>
+					  <span class="link_name">Sair</span>
+					</a>
+					<span class="tooltip">Sair</span>
+				  </li>
+
+				<li class="profile">
+					<div class="profile_details">
+						<div class="profile_content">
+							<h1 class="name"><span th:text="${session.funclogado.nome}"></span></h1>
+							<h1 class="designation"><span th:text="${session.funclogado.acesso}"></span></h1>
+						</div>
+					</div>
+				</li>
+			</ul>
+		</div>
+			
+			</div>
+		</form>
+	
+	
+	<div class="content">
+		<!-- Conteúdo da página -->
+		<style>
+			body {
+				font-family: Arial, sans-serif;
+				margin: 0;
+				padding: 0;
+				background-color: #f4f4f4;
+			}
+
+			.container {
+				max-width: 600px;
+				margin: 20px auto;
+				padding: 20px;
+				background-color: #fff;
+				border-radius: 8px;
+				box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+			}
+
+			h2 {
+				text-align: center;
+				margin-bottom: 20px;
+			}
+
+			label {
+				display: block;
+				margin-bottom: 8px;
+				font-weight: bold;
+			}
+
+			input[type="text"],
+			input[type="number"],
+			input[type="date"],
+			select,
+			textarea {
+				width: 100%;
+				padding: 10px;
+				margin-bottom: 20px;
+				border: 1px solid #ccc;
+				border-radius: 4px;
+				font-size: 14px;
+			}
+
+			textarea {
+				resize: vertical;
+			}
+
+			button {
+				background-color: #a682ff;
+				color: #fff;
+				padding: 10px 20px;
+				border: none;
+				border-radius: 4px;
+				cursor: pointer;
+			}
+			::-webkit-scrollbar{
+  width: 10px;
+  height: 5px;
+}
+
+::-webkit-scrollbar-track{
+  box-shadow: inset 0 0 8px rgba(0,0,0,0.2);
+}
+
+::-webkit-scrollbar-thumb{
+  background: #a682ff;
+  border-radius: 10px;
+}
+			
+			
+			
+		</style>
+		</head>
+
+		<body>
+			<form th:action="@{/universoliterario/livros/saveADM}" enctype="multipart/form-data" th:object="${livro}"
+				method="post">
+				<div class="container">
+					<h2>Adicionar Livro</h2>
+					<form>
+						<label for="titulo">Título do Livro</label>
+						<input type="text" id="titulo" name="titulo" th:field="*{titulo}">
+
+						<label for="autor">Autor do Livro</label>
+						<select name="genero" th:field="*{autor}" onChange="onstatechange(this)">
+							<option value="0">Escolha o autor</option>
+							<option th:each="autor: ${autores}" th:text="${autor.nome}" th:value="${autor.id}">
+							</option>
+						</select>
+
+						<label for="editora">Editora do Livro</label>
+						<select name="editora" th:field="*{editora}" onChange="onstatechange(this)">
+							<option value="0">Escolha a editora</option>
+							<option th:each="editora: ${editoras}" th:text="${editora.nome}" th:value="${editora.id}">
+							</option>
+						</select>
+
+
+
+						<label for="genero">Gênero</label>
+						<select name="genero" th:field="*{genero}" onChange="onstatechange(this)">
+							<option value="0">Escolha o gênero</option>
+							<option th:each="genero: ${generos}" th:text="${genero.descricao}" th:value="${genero.id}">
+							</option>
+						</select>
+
+						<label for="isbn">ISBN</label>
+						<input type="text" id="isbn" name="isbn" required th:field="*{isbn}">
+
+						<label for="preco">Preço</label>
+						<input type="number" id="preco" name="preco" step="0.01" required th:field="*{preco}">
+
+						<label for="preco">Quantidade</label>
+						<input type="number" id="preco" name="preco" required th:field="*{quantidade}">
+
+						<label for="sinopse">Sinopse</label>
+						<textarea id="sinopse" name="sinopse" rows="4" required th:field="*{sinopse}"></textarea>
+
+						<label for="imagens">Imagem do Livro</label>
+						<div class="form-group-col-md-4">
+							<input class="form-control" type="file" onchange="preViewImg();" name="file"
+								accept="image/*" id="uploadImage">
+						</div>
+						<div class="form-group-col-md-8">
+
+							<img id="preView" alt="..."
+								th:src="*{imagem} ? @{${'/universoliterario/livros/show/image/' + livros.id}} :${semImagem}">
+						</div>
+
+
+						<button type="submit">Adicionar Livro</button>
+
+
+					</form>
+
+			</form>
+	</div>
+
+</body>
+		<script src="/js/Sidebar.js"></script>
+</html>
